@@ -3,7 +3,7 @@
     <el-table
       border
       fit
-      :data="dataModal.list.list"
+      :data="dataModal.list.data"
       style="width: 100%"
       highlight-current-row
       tooltip-effect="dark"
@@ -136,7 +136,7 @@
             :page-sizes="[10,15,30, 50]"
             :page-size="dataModal.list.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="dataModal.list.total"
+            :total="dataModal.list.totalNumber"
           >
           </el-pagination>
         </div>
@@ -155,7 +155,7 @@
             :page-sizes="[10,15,30, 50]"
             :page-size="dataModal.list.pageSize"
             layout="prev, pager, next"
-            :total="dataModal.list.total"
+            :total="dataModal.list.totalNumber"
           >
           </el-pagination>
         </div>

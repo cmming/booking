@@ -1,49 +1,20 @@
 <template>
   <div class="user-container">
     <el-card>
-
-      <template>
-        <el-table
-          :data="tableData"
-          border
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="date"
-            label="日期"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="姓名"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="地址"
-          >
-          </el-table-column>
-
-          <el-table-column
-            label="操作"
-          >
-            <template slot-scope="scope">
-              <el-button
-                @click.native.prevent="deleteRow(scope.$index, tableData)"
-                type="primary"
-                size="small"
-              >
-                移除
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </template>
+      <c-table
+        :dataModal="record"
+        :handleColumnWidth="400"
+      >
+      </c-table>
     </el-card>
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
+import CTable from "@/components/Table/index";
 export default {
+  components: { CTable },
+  computed: mapGetters(["record"]),
   data() {
     return {
       tableData: [
@@ -70,8 +41,8 @@ export default {
       ]
     };
   },
-  methods:{
-      deleteRow(){}
+  methods: {
+    deleteRow() {}
   }
 };
 </script>

@@ -8,32 +8,39 @@
         tag="li"
         to="/booking"
       >首页</router-link>
-      <router-link
+      <!-- <router-link
         active-class="active"
         class=""
         tag="li"
         to="/record"
-      >我的预约</router-link>
-      <!-- <li
+      >我的预约</router-link> -->
+      <li
         class="relative userCenter"
         tag="li"
         to="/user"
-      >个人中心 -->
-      <!-- <ul class="secondMenu">
+      >个人中心
+      <ul class="secondMenu">
           <router-link
             active-class="active"
             tag="li"
-            to="/user"
+            to="/record"
           >我的预约</router-link>
           <li>修改密码</li>
-        </ul> -->
-      <!-- </li> -->
+        </ul>
+      </li>
       <!-- 右侧的导航 -->
       <li class="fr">
-        username
+        <svg-icon
+            class-name='login-icon'
+            icon-class="logout"
+          />
       </li>
-      <li class="fr">
-        logout
+      <li class="fr userInfo">
+        <img
+          src="../../../../assets/images/avatar.png"
+          alt=""
+        >
+        超人
       </li>
     </ul>
   </div>
@@ -97,6 +104,14 @@
       &:hover {
         background: #deeaff;
       }
+    }
+  }
+  .userInfo {
+    img {
+      width: 42px;
+      height: 42px;
+      padding: 19px 8px;
+      vertical-align: middle;
     }
   }
 }
