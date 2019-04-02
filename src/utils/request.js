@@ -22,8 +22,8 @@ service.interceptors.request.use(config => {
     //修复 基本路径修改不生效的bug
     // config.baseURL = '/api/';
     config.baseURL = GLOBAL_CONFIG.INIT_API_UPL();
-        //每次 都将请求的 头部 进行取值 取保最新
-        // config.data = qs.stringify(config.data);
+    //每次 都将请求的 头部 进行取值 取保最新
+    // config.data = qs.stringify(config.data);
     if (!config.headers['Content-Type'] || config.headers['Content-Type'] && config.headers['Content-Type'] !== 'multipart/form-data') {
 
         if (
@@ -84,11 +84,13 @@ service.interceptors.response.use(
             switch (errorStatus) {
                 case 401:
                     // 取主动刷新token
-                    errorAlertTitle = '重新登录提示' + errorStatus;
-                    errorAlertMsg = '长时间为操作，自动退出'
-                    var uamConfigData = storage.get('uamConfigData');
-                    uamConfigData.token = "";
-                    storage.set('uamConfigData', uamConfigData);
+                    // errorAlertTitle = '重新登录提示' + errorStatus;
+                    // errorAlertMsg = '长时间为操作，自动退出'
+                    // var uamConfigData = storage.get('uamConfigData');
+                    // uamConfigData.token = "";
+                    // storage.set('uamConfigData', uamConfigData);
+                    // 退出登陆
+                    store.dispatch('LOGOUT')
                     router.push('/login')
                     break;
                 case 422:
