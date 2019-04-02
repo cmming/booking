@@ -4,5 +4,10 @@ export default {
         method: "post",
         hasData: true,
     },
+    LOGOUT: {
+        url: "/logOut.do",
+        method: "post",
+        hasData: false,
+    },
     
 }

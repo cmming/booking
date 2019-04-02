@@ -28,4 +28,19 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+.pagination-container {
+  margin-top: 30px;
+}
+.middle {
+  vertical-align: middle;
+}
+.user-container {
+  margin: 50px;
+}
+.el-card {
+  padding: 15px;
+}
+.el-dialog {
+  min-width: 500px !important;
+}
 </style>

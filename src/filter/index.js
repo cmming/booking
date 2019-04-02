@@ -84,14 +84,86 @@ Vue.filter('changeTableColumns', function(state, tableIndex, columnIndex, filter
                 },
             },
         },
+        "users": {
+            state: {
+                "1": {
+                    "tagType": "success"
+                },
+                "-1": {
+                    "tagType": "danger"
+                },
+            },
+            // 权限，1管理员，2用户
+            jurisdiction: {
+                "1": {
+                    "tagType": "info"
+                },
+                "2": {
+                    "tagType": "info"
+                },
+            },
+        },
+        "bookings": {
+            // -1预约，-2取消，-3以使用
+            "applyStatus": {
+                "-1": {
+                    "tagType": "success"
+                },
+                "-2": {
+                    "tagType": "danger"
+                },
+                "-3": {
+                    "tagType": "warning"
+                },
+            },
+            // 干预标记，0正常，1到时不上机，2提前下机,3拒绝申请,4故障
+            "adminMark": {
+                "0": {
+                    "tagType": "success"
+                },
+                "1": {
+                    "tagType": "danger"
+                },
+                "2": {
+                    "tagType": "danger"
+                },
+                "3": {
+                    "tagType": "danger"
+                },
+                "4": {
+                    "tagType": "warning"
+                },
+            },
+        },
+        termical: {
+            state: {
+                "1": {
+                    "tagType": "success"
+                },
+                "-1": {
+                    "tagType": "danger"
+                },
+                "-2": {
+                    "tagType": "danger"
+                },
+            },
+        }
     }
     if (filterKey == 'lable') {
-        var indexStr = "backstage." + tableIndex + ".filter." + columnIndex + "." + state
-        // return i18n.t("backstage."+tableIndex+".filter."+columnIndex+"."+state)
-        return i18n.t(indexStr) 
+        if (state === '' || state === null) {
+            return '未知状态'
+        } else {
+            var indexStr = "backstage." + tableIndex + ".filter." + columnIndex + "." + state
+                // return i18n.t("backstage."+tableIndex+".filter."+columnIndex+"."+state)
+            return i18n.t(indexStr)
+        }
     } else {
         // console.log(tableIndex,columnIndex,state,filterKey)
-        return (stateArr[tableIndex]&&stateArr[tableIndex][columnIndex]&&stateArr[tableIndex][columnIndex][state]&&stateArr[tableIndex][columnIndex][state][filterKey]) ? stateArr[tableIndex][columnIndex][state][filterKey] : ''
+        if (state === '' || state === null) {
+            return "danger"
+        } else {
+            return (stateArr[tableIndex] && stateArr[tableIndex][columnIndex] && stateArr[tableIndex][columnIndex][state] && stateArr[tableIndex][columnIndex][state][filterKey]) ? stateArr[tableIndex][columnIndex][state][filterKey] : ''
+        }
     }
 
 })

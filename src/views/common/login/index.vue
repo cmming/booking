@@ -63,7 +63,7 @@ export default {
           if (res.data.jurisdiction == 1) {
             //管理员
             this.$router.push({ path: "/booking" });
-          } else if (res.data.jurisdiction == 1) {
+          } else if (res.data.jurisdiction == 2) {
             // 客户端
             this.$router.push({ path: "/booking" });
           }

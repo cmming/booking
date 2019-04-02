@@ -5,6 +5,9 @@ export const backstage = {
         detail: "详情",
         edit: "编辑",
     },
+    form: {
+        resetForm: "重置"
+    },
     common: {
         delete: {
             label: "删除",
@@ -94,14 +97,14 @@ export const backstage = {
         },
         columns: {
             pcName: "机器名称",
-            applyTimes:"申请时间",
-            applyCode:"申请码",
-            applyTimes:"申请时间",
-            applyStatus:"申请状态",
-            adminMark:"审批状态",
-            applyDateStr:"申请时间"
+            applyTimes: "申请时间",
+            applyCode: "申请码",
+            applyTimes: "申请时间",
+            applyStatus: "申请状态",
+            adminMark: "审批状态",
+            applyDateStr: "申请时间"
         },
-        submitForms:{
+        submitForms: {
             remarks: {
                 label: "备注",
                 placeholder: "请输入备注",
@@ -128,6 +131,153 @@ export const backstage = {
                 placeholder: "请填写logo",
                 message: {
                     required: "请输入logo",
+                }
+            },
+        }
+
+    },
+    users: {
+        add: { 'title': "添加用户" },
+        update: { 'title': "编辑用户" },
+        filter: {
+            // 状态 1正常 -1停用
+            state: {
+                '1': '正常',
+                '-1': '停用',
+            },
+            // 权限，1管理员，2用户
+            jurisdiction: {
+                '1': '管理员',
+                '2': '用户',
+            },
+        },
+        columns: {
+            loginName: "登录名",
+            userName: "用户姓名",
+            idNumber: "证件号",
+            phone: "手机号",
+            state: "状态",
+            jurisdiction: "用户类型",
+        },
+        submitForms: {
+            idNumber: {
+                label: "证件号",
+                placeholder: "请输入证件号",
+                message: {
+                    required: "请输入证件号",
+                }
+            },
+            userName: {
+                label: "用户姓名",
+                placeholder: "请输入用户姓名",
+                message: {
+                    required: "请输入用户姓名",
+                }
+            },
+            loginName: {
+                label: "登录名",
+                placeholder: "请输入登录名",
+                message: {
+                    required: "请输入登录名",
+                }
+            },
+            phone: {
+                label: "手机号",
+                placeholder: "请输入手机号",
+                message: {
+                    required: "请输入手机号",
+                }
+            },
+            jurisdiction: {
+                label: "用户类型",
+                placeholder: "请选择用户类型",
+                message: {
+                    required: "请选择用户类型",
+                }
+            },
+        }
+
+    },
+    bookings: {
+        filter: {
+            // -1预约，-2取消，-3以使用
+            applyStatus: {
+                '-1': '预约',
+                '-2': '取消',
+                '-3': '已使用',
+            },
+            // 干预标记，0正常，1到时不上机，2提前下机,3拒绝申请,4故障
+            adminMark: {
+                '0': '正常',
+                '1': '到时不上机',
+                '2': '提前下机',
+                '3': '拒绝申请',
+                '4': '故障',
+            },
+        },
+        columns: {
+            userName: "用户名称",
+            pcId: "机器编号",
+            pcName: "机器名称",
+            phone: "手机",
+            applyTimes: "申请时间",
+            applyCode: "申请码",
+            applyTimes: "申请时间",
+            applyStatus: "申请状态",
+            adminMark: "审批状态",
+            applyDateStr: "申请时间"
+        },
+
+    },
+
+    termical: {
+        add: { 'title': "添加机器" },
+        update: { 'title': "编辑机器" },
+        filter: {
+            // 1正常，-1故障,-2停用删除设备
+            state: {
+                '-1': '故障',
+                '-2': '停用',
+                '1': '正常',
+            },
+        },
+        columns: {
+            id: "机器编号",
+            pcName: "机器名称",
+            state: "机器状态"
+        },
+        submitForms: {
+            pcName: {
+                label: "机器名称",
+                placeholder: "请输入机器名称",
+                message: {
+                    required: "请输入机器名称",
+                }
+            },
+            state: {
+                label: "状态",
+                placeholder: "请选择状态",
+                message: {
+                    required: "请选择状态",
+                }
+            },
+        }
+
+    },
+
+    dashboard: {
+        filter: {},
+        columns: {
+            pcid: "机器编号",
+            pacName: "机器名称",
+            state: "机器状态"
+        },
+        submitForms: {
+            pcName: {
+                label: "机器名称",
+                placeholder: "请输入机器名称",
+                message: {
+                    required: "请输入机器名称",
                 }
             },
         }

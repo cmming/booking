@@ -40,7 +40,7 @@
           :md="4"
           :lg="3"
           :xl="2"
-          v-for="(item,key) in computerList"
+          v-for="(item,key) in booking.list.data"
           :key="key"
         >
           <div
@@ -84,7 +84,7 @@
             v-for="(item,key) in timeList"
             :key="key"
             :label="item.value"
-            :disabled="!item.state"
+            :disabled="item.state===-1"
           >{{item.time}}</el-checkbox>
         </el-checkbox-group>
         <span
@@ -110,40 +110,14 @@ export default {
       dialogVisible: false,
       checkList: [],
       timeList: [],
-      // [
-      //   { time: "9:00", value: 1, state: 1 },
-      //   { time: "10:00", value: 2, state: 1 },
-      //   { time: "11:00", value: 3, state: 0 },
-      //   { time: "12:00", value: 4, state: 1 }
-      // ],
-      computerList: [
-        {
-          pcName: "测试机器1",
-          pcId: 1,
-          resourceList: [
-            { time: "9:00", value: 1, state: 1 },
-            { time: "10:00", value: 2, state: 1 },
-            { time: "11:00", value: 3, state: 0 },
-            { time: "12:00", value: 4, state: 1 }
-          ]
-        },
-        {
-          pcName: "测试机器2",
-          pcId: 2,
-          resourceList: [
-            { time: "9:00", value: 1, state: 1 },
-            { time: "10:00", value: 2, state: 1 },
-            { time: "11:00", value: 3, state: 0 },
-            { time: "12:00", value: 4, state: 1 }
-          ]
-        }
-      ],
       choseComputer: ""
     };
   },
   created() {
     //获取系统时间
-    this.$store.dispatch("GET_BOOKING_TIME").then(res => {});
+    this.$store.dispatch("GET_BOOKING_TIME").then(res => {
+      // this.$store.dispatch("GET_COMPUTER_LIST", this.booking.queryFormData);
+    });
   },
   methods: {
     getComputerList() {
@@ -152,7 +126,7 @@ export default {
 
     showBookingDialog(data) {
       this.dialogVisible = true;
-      this.choseComputer = data
+      this.choseComputer = data;
       // this.bookingId = data.pcId;
       this.timeList = data.resourceList;
     },
@@ -180,6 +154,10 @@ export default {
     .el-dialog__title {
       color: #ffffff;
     }
+  }
+  .el-checkbox {
+    margin-bottom: 30px;
+    margin-top: 30px;
   }
 }
 .booking-container img {

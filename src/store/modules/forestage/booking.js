@@ -22,7 +22,13 @@ const state = {
         },
         pickerOptions: {},
         // 用户的表单
-        queryFormData: { dayMark: '', applyTiems: '', id: "", pageIndex: "", pageSize: "" ,startTime:"",endTime:""}
+        queryFormData: { dayMark: '', applyTiems: '', id: "", pageIndex: "", pageSize: "", startTime: "", endTime: "" },
+        list: {
+            "pageNum": 0,
+            "pageSize": 0,
+            "totalNumber": 0,
+            "data": []
+        },
     }
 }
 
@@ -37,7 +43,7 @@ const mutations = {
         // state.user.userInfo = data
         //日期范围
         console.log(data)
-        // state.booking.queryDate = data.days.length
+            // state.booking.queryDate = data.days.length
         state.booking.queryTime = data.times
             //时间的范围
             // state.booking.queryDate = data.times
@@ -45,13 +51,16 @@ const mutations = {
                 disabledDate(time) {
                     return (
                         time.getTime() <= data.days.times - 8.64e7 ||
-                        time.getTime() >= data.days.times + ( data.days.length - 1) * 24 * 60 * 60 * 1000
+                        time.getTime() >= data.days.times + (data.days.length - 1) * 24 * 60 * 60 * 1000
                         // time.getTime() <= Date.now() - 8.64e7 ||
                         // time.getTime() >= Date.now() + (state.booking.queryDate - 1) * 24 * 60 * 60 * 1000
                     ); //如果没有后面的-8.64e6就是不可以选择今天的
                 }
             }
             // console.log(data)
+    },
+    GET_COMPUTER_LIST: (state, data) => {
+        state.booking.list = data
     },
 }
 

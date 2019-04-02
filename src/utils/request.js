@@ -8,7 +8,7 @@ import {
 import store from '@/store'
 import storage from '@/utils/storage';
 
-import { getRootApi } from "@/utils/function";
+// import { getRootApi } from "@/utils/function";
 
 
 // create an axios instance
@@ -20,8 +20,8 @@ const service = axios.create({
 service.interceptors.request.use(config => {
     // store.dispatch('SHOW_LOADING')
     //修复 基本路径修改不生效的bug
-    config.baseURL = '/api/';
-    console.log(config)
+    // config.baseURL = '/api/';
+    config.baseURL = GLOBAL_CONFIG.INIT_API_UPL();
         //每次 都将请求的 头部 进行取值 取保最新
         // config.data = qs.stringify(config.data);
     if (!config.headers['Content-Type'] || config.headers['Content-Type'] && config.headers['Content-Type'] !== 'multipart/form-data') {
