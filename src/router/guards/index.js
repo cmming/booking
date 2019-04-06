@@ -5,7 +5,7 @@ const whiteList = ['/login']
 
 // 前置 守卫
 router.beforeEach((to, from, next) => {
-    let userInfo = storage.get('userInfo')
+    let userInfo = storage.get('token')
     if (userInfo && Object.keys(userInfo).length) {
         if (to.path === '/login') {
             if (userInfo.jurisdiction == 1) {

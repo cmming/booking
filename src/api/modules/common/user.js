@@ -1,11 +1,29 @@
 export default {
+
+    CAPTCHA:{
+        url: "/auth/captcha.jpg",
+        method: "post",
+        hasData: true,
+    },
     USER_lOGIN: {
-        url: "/userLogin.do",
+        url: "/auth/login",
         method: "post",
         hasData: true,
     },
     LOGOUT: {
-        url: "/logOut.do",
+        url: "/auth/logout",
+        method: "post",
+        hasData: false,
+    },
+
+    USER_INFO: {
+        url: "/auth/logout",
+        method: "post",
+        hasData: false,
+    },
+
+    REFRESH_TOKEN: {
+        url: "/auth/refresh",
         method: "post",
         hasData: false,
     },

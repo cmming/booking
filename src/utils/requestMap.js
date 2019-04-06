@@ -6,7 +6,7 @@ export function requestMap(apiKey, data) {
     // console.log(data)
     let res;
     //如果是表单 formdata
-    if (API_TYPE[apiKey]['hasData'] && API_TYPE[apiKey]['method'] == 'post') {
+    if (API_TYPE[apiKey]['hasData'] && (API_TYPE[apiKey]['method'] == 'post') || API_TYPE[apiKey]['method'] == 'put') {
         res = {
             url: API_TYPE[apiKey]['url'],
             method: API_TYPE[apiKey]['method'],
@@ -34,8 +34,13 @@ export function requestMap(apiKey, data) {
         };
     }
 
-    
+    if (API_TYPE[apiKey]['method'] == 'put' || API_TYPE[apiKey]['method'] == 'delete') {
+        if (data && data['resource_id']) {
+            res.url += ('/' + data['resource_id'])
+        }
+    }
 
-   console.log(res)
+
+    //    console.log(res)
     return request(res)
 }

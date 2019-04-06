@@ -12,7 +12,7 @@
         <div class="login-input-container">
           <el-input
             class="login-input"
-            v-model="user.form.loginName"
+            v-model="user.form.name"
             placeholder="用户名"
             autocomplete=false
           ></el-input>
@@ -27,7 +27,7 @@
         <div class="login-input-container">
           <el-input
             class="login-input"
-            v-model="user.form.passWord"
+            v-model="user.form.password"
             placeholder="密码"
             autocomplete=false
             type="password"
@@ -58,16 +58,18 @@ export default {
     login() {
       console.log(this.user.form);
       this.$store.dispatch("USER_lOGIN", this.user.form).then(res => {
-        if (res.state > 0) {
-          //权限，1管理员，2用户
-          if (res.data.jurisdiction == 1) {
-            //管理员
-            this.$router.push({ path: "/booking" });
-          } else if (res.data.jurisdiction == 2) {
-            // 客户端
-            this.$router.push({ path: "/booking" });
-          }
-        }
+
+        this.$router.push({ path: "/booking" });
+        // if (res.state > 0) {
+        //   //权限，1管理员，2用户
+        //   if (res.data.jurisdiction == 1) {
+        //     //管理员
+        //     this.$router.push({ path: "/booking" });
+        //   } else if (res.data.jurisdiction == 2) {
+        //     // 客户端
+        //     this.$router.push({ path: "/booking" });
+        //   }
+        // }
       });
     }
   }

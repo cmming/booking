@@ -8,12 +8,7 @@
       highlight-current-row
       tooltip-effect="dark"
     >
-      <!-- :default-sort="{prop: 'date', sort: 'descending'}" -->
-      <!-- <el-table-column
-        type="selection"
-        width="55"
-      >
-      </el-table-column> -->
+  
 
       <template v-for="(item,index)  in dataModal.columns">
         <el-table-column
@@ -24,13 +19,6 @@
         >
         </el-table-column>
       </template>
-      <!-- 含有 filter 的 列 -->
-      <!-- <slot name="filterColumns"></slot> -->
-
-      <!-- <template
-        slot="filterColumns"
-        v-for="(item,index)  in dataModal.filterColumns"
-      > -->
 
       <el-table-column
         v-for="(item,index)  in dataModal.filterColumns"
@@ -132,11 +120,11 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page.sync="dataModal.list.pageNum"
+            :current-page.sync="dataModal.list.meta.pagination.current_page"
             :page-sizes="[10,15,30, 50]"
-            :page-size="dataModal.list.pageSize"
+            :page-size="dataModal.list.meta.pagination.per_page"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="dataModal.list.totalNumber"
+            :total="dataModal.list.meta.pagination.count"
           >
           </el-pagination>
         </div>
@@ -151,11 +139,11 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page.sync="dataModal.list.pageNum"
+            :current-page.sync="dataModal.list.meta.pagination.current_page"
             :page-sizes="[10,15,30, 50]"
-            :page-size="dataModal.list.pageSize"
+             :page-size="dataModal.list.meta.pagination.per_page"
             layout="prev, pager, next"
-            :total="dataModal.list.totalNumber"
+            :total="dataModal.list.meta.pagination.count"
           >
           </el-pagination>
         </div>
@@ -190,18 +178,18 @@ export default {
   },
   methods: {
     list() {
-      // var resData = this.getDataFormat(this.projectReport.searchData);
-      var paramObj = this.dataModal.searchData;
+      // var resData = this.getDataFormat(this.projectReport.queryFormData);
+      var paramObj = this.dataModal.queryFormData;
       this.$store.dispatch(this.dataModal.listAction, paramObj);
     },
 
     handleSizeChange(data) {
-      this.dataModal.searchData.pageSize = data;
+      this.dataModal.queryFormData.limit = data;
       this.list();
     },
     // 页码发生改变
     handleCurrentChange(data) {
-      this.dataModal.searchData.pageNum = data;
+      this.dataModal.queryFormData.page = data;
       this.list();
     },
     deleteItem(data) {

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import { Form, FormItem, Input, Button, ButtonGroup, Message, Dropdown, DropdownMenu, DropdownItem, Row, Col, Loading, Dialog, MessageBox, Notification, Checkbox, CheckboxGroup, Tabs, TabPane, Table, TableColumn, Tooltip, Tag, Pagination, ColorPicker, Card, RadioGroup, Radio, TimePicker, DatePicker, Select, Option } from 'element-ui';
+import { Form, FormItem, Input, Button, ButtonGroup, Message, Dropdown, DropdownMenu, DropdownItem, Row, Col, Loading, Dialog, MessageBox, Notification, Checkbox, CheckboxGroup, Tabs, TabPane, Table, TableColumn, Tooltip, Tag, Pagination, ColorPicker, Card, RadioGroup, Radio, TimePicker, DatePicker, Select, Option,TimeSelect } from 'element-ui';
 import 'element-ui/lib/theme-chalk/display.css';
 
 const elementUiConfig = {
@@ -43,5 +43,7 @@ Vue.use(Radio, elementUiConfig);
 Vue.use(DatePicker, elementUiConfig);
 Vue.use(Select, elementUiConfig);
 Vue.use(Option, elementUiConfig);
+
+Vue.use(TimeSelect, elementUiConfig);
 
 import 'element-ui/lib/theme-chalk/index.css'

@@ -55,11 +55,11 @@ service.interceptors.response.use(
         switch (reStatus) {
             case 200:
                 //如果状态码小于0 就直接输出错误信息
-                console.log(response.data.state)
-                if (response.data.state && response.data.state == -1) {
-                    alertMsg = response.data.message
-                    notificationType = 'error'
-                }
+                // console.log(response.data.state)
+                // if (response.data.state && response.data.state == -1) {
+                //     alertMsg = response.data.message
+                //     notificationType = 'error'
+                // }
                 break;
             default:
                 break;

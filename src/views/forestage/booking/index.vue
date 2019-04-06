@@ -1,35 +1,28 @@
 <template>
   <div class="booking-container">
     <el-card>
-
       <div class="block">
         <span class="demonstration">预约时间</span>
         <el-date-picker
-          v-model="booking.queryFormData.dayMark"
+          v-model="booking.queryFormData.date"
           type="date"
           :picker-options="booking.pickerOptions"
           placeholder="选择日期"
           value-format="yyyy-MM-dd"
-        >
-        </el-date-picker>
+        ></el-date-picker>
 
         <el-time-select
           placeholder="起始时间"
-          v-model="booking.queryFormData.startTime"
+          v-model="booking.queryFormData.start_time"
           :picker-options="booking.queryTime"
-        >
-        </el-time-select>
+        ></el-time-select>
         <el-time-select
           placeholder="结束时间"
-          v-model="booking.queryFormData.endTime"
-          :picker-options="booking.queryTime"
-        >
-        </el-time-select>
+          v-model="booking.queryFormData.end_time"
+          :picker-options="{...booking.queryTime,minTime:booking.queryFormData.start_time}"
+        ></el-time-select>
 
-        <el-button
-          type="primary"
-          @click="getComputerList"
-        >查询</el-button>
+        <el-button type="primary" @click="getComputerList">查询</el-button>
       </div>
     </el-card>
     <el-card>
@@ -43,16 +36,13 @@
           v-for="(item,key) in booking.list.data"
           :key="key"
         >
-          <div
-            class="computer-item"
-            @click="showBookingDialog(item)"
-          >
+          <div class="computer-item" @click="showBookingDialog(item)">
             <img
               src="../../../assets/images/computer-normal.png"
-              alt=""
+              alt
               style="max-width:80%;padding: 0 10%;"
             >
-            <span class="computer-item-title">{{item.pcName}}</span>
+            <span class="computer-item-title">{{item.name}}</span>
           </div>
         </el-col>
 
@@ -71,31 +61,32 @@
             >
             <span class="computer-item-title">1号电脑</span>
           </div>
-        </el-col> -->
-
+        </el-col>-->
       </el-row>
-      <el-dialog
-        :title="choseComputer.pcName"
-        :visible.sync="dialogVisible"
-        width="30%"
-      >
-        <el-checkbox-group v-model="checkList">
+      <el-dialog :title="choseComputer.name" :visible.sync="dialogVisible" width="30%">
+        <!-- <el-checkbox-group v-model="checkList">
           <el-checkbox
             v-for="(item,key) in timeList"
             :key="key"
             :label="item.value"
             :disabled="item.state===-1"
           >{{item.time}}</el-checkbox>
-        </el-checkbox-group>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
+        </el-checkbox-group>-->
+
+        <el-time-select
+          placeholder="起始时间"
+          v-model="booking.storeOrderFormData.start_time"
+          :picker-options="orderTimePicker"
+        ></el-time-select>
+        <el-time-select
+          placeholder="结束时间"
+          v-model="booking.storeOrderFormData.end_time"
+          :picker-options="{...orderTimePicker,minTime:booking.storeOrderFormData.start_time}"
+        ></el-time-select>
+
+        <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="storeBooking"
-          >确 定</el-button>
+          <el-button type="primary" @click="storeBooking">确 定</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -110,7 +101,8 @@ export default {
       dialogVisible: false,
       checkList: [],
       timeList: [],
-      choseComputer: ""
+      choseComputer: "",
+      orderTimePicker: { start: "08:00", step: "01:00", end: "18:30" }
     };
   },
   created() {
@@ -127,19 +119,22 @@ export default {
     showBookingDialog(data) {
       this.dialogVisible = true;
       this.choseComputer = data;
-      // this.bookingId = data.pcId;
-      this.timeList = data.resourceList;
+
+      this.orderTimePicker.start = this.booking.queryFormData.start_time;
+      this.orderTimePicker.end = this.booking.queryFormData.end_time;
+      this.orderTimePicker.step = this.booking.queryTime.step;
+      this.booking.storeOrderFormData.start_time = "";
+      this.booking.storeOrderFormData.end_time = "";
     },
     storeBooking() {
       // 将选中的信息显示出来，使用确认框的方式提示是否提交
+      this.booking.storeOrderFormData.termical_id = this.choseComputer.id;
+      this.booking.storeOrderFormData.date = this.booking.queryFormData.date;
       this.$store
-        .dispatch("STORE_COMPUTER_BOOKING", {
-          id: this.choseComputer.pcId,
-          applyarr: this.checkList.join(","),
-          dayMark: this.booking.queryFormData.dayMark
-        })
+        .dispatch("STORE_COMPUTER_BOOKING", this.booking.storeOrderFormData)
         .then(res => {
           this.dialogVisible = false;
+          this.getComputerList();
         });
     }
   }

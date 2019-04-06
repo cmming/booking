@@ -80,20 +80,15 @@ export const backstage = {
     },
     record: {
         filter: {
-            // -1预约，-2取消，-3以使用
-            applyStatus: {
-                '-1': '预约',
-                '-2': '取消',
-                '-3': '已使用',
+            // 订单状态 1：未使用 2：使用中 3：已经使用 4：强制下线 5：管理员拒绝订单
+            state: {
+                '1': '未使用',
+                '2': '使用中',
+                '3': '已经使用',
+                '4': '强制下线',
+                '5': '管理员拒绝订单',
             },
-            // 干预标记，0正常，1到时不上机，2提前下机,3拒绝申请,4故障
-            adminMark: {
-                '0': '正常',
-                '1': '到时不上机',
-                '2': '提前下机',
-                '3': '拒绝申请',
-                '4': '故障',
-            },
+            
         },
         columns: {
             pcName: "机器名称",
@@ -102,7 +97,11 @@ export const backstage = {
             applyTimes: "申请时间",
             applyStatus: "申请状态",
             adminMark: "审批状态",
-            applyDateStr: "申请时间"
+            applyDateStr: "申请时间",
+            termical_id:"机器编号",
+            btime:"开始时间",
+            etime:"结束时间",
+            state:"订单状态"
         },
         submitForms: {
             remarks: {

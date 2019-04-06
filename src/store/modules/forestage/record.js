@@ -12,26 +12,20 @@ import {
 
 const state = {
     record: {
-        list: {
-            "pageNum": 0,
-            "pageSize": 0,
-            "totalNumber": 0,
-            "data": []
+        llist: {
+            "data": [],
+            "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0 ,"per_page":15} },
         },
-        searchData: { "btime": "", "etime": "", "pageNum": 1, "pageSize": 15, "order_by": "", "order": "" },
+        queryFormData: { page: "", limit: "", end_time: "", start_time: "", date: '', applyTiems: '', id: "", },
         columns: [{
-            prop: "pcName",
+            prop: "termical_id",
         },{
-            prop:"applyTimes",
+            prop:"btime",
         },{
-            prop:"applyCode",
-        },{
-            prop:"applyDateStr",
+            prop:"etime",
         }],
         filterColumns: [{
-            prop: "applyStatus",
-        },{
-            prop: "adminMark",
+            prop: "state",
         }],
         index: "record",
         listAction: GET_RECORD_LIST,
@@ -74,6 +68,7 @@ const getters = {
 
 const mutations = {
     GET_RECORD_LIST: (state, data) => {
+        console.log(data)
         state.record.list = data
         console.log(state.record.list)
     },
@@ -86,7 +81,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             requestMap('GET_RECORD_LIST', data).then(response => {
                 resolve(response.data)
-                commit('GET_RECORD_LIST', response.data.data)
+                commit('GET_RECORD_LIST', response.data)
             }).catch(error => {
                 reject(error)
             })

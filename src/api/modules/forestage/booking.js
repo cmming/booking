@@ -1,19 +1,19 @@
 export default {
     GET_BOOKING_TIME: {
-        url: "getTimeStamp.do",
-        method: "post",
-        hasData: true,
+        url: "booking/times/getCurentTimeConfig",
+        method: "get",
+        hasData: false,
         isAdmin: true
     },
 
     GET_COMPUTER_LIST: {
-        url: "getResourceInfo.do",
-        method: "post",
+        url: "booking/termicals",
+        method: "get",
         hasData: true,
         isAdmin: true
     },
     STORE_COMPUTER_BOOKING: {
-        url: "applyResource.do",
+        url: "/booking/termicalOrders",
         method: "post",
         hasData: true,
         isAdmin: true

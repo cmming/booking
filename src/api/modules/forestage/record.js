@@ -1,13 +1,13 @@
 export default {
     GET_RECORD_LIST: {
-        url: "getLastTwoWeeksAllApplyLogByUserId.do",
-        method: "post",
+        url: "/booking/termicalOrders",
+        method: "get",
         hasData: true,
         isAdmin: true
     },
     UPDATE_RECORD: {
-        url: "withdrawApply.do",
-        method: "post",
+        url: "api/booking/termicalOrders",
+        method: "put",
         hasData: true,
         isAdmin: true
     },

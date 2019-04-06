@@ -2,7 +2,9 @@ import storage from '@/utils/storage';
 import {
     USER_lOGIN,
     LOGOUT,
-    USERS_SET_PWD
+    USERS_SET_PWD,
+    USER_INFO,
+    REFRESH_TOKEN
 } from '../mutation-types'
 
 
@@ -17,8 +19,8 @@ const state = {
         userInfo: storage.get("userInfo") ? storage.get("userInfo") : {},
         // 用户的表单
         form: {
-            loginName: "",
-            passWord: ""
+            name: "",
+            password: ""
         },
         // 验证规则
         submitFormsRoles: {},
@@ -34,13 +36,13 @@ const getters = {
 
 const mutations = {
     USER_lOGIN: (state, data) => {
-        storage.set("userInfo", data);
-        state.user.userInfo = data
-            // 根据用户的类型进行判断
-            //权限，1管理员，2用户
+        //存储用户的token
+        storage.set("token", data);
+        // 根据用户的类型进行判断
+        //权限，1管理员，2用户
         if (data.jurisdiction == 1) {
-            state.user.userMenuList = [{ path: '/admin/dashboard', name: '首页' }, { path: '/admin/termical', name: '机器管理' }, { path: '/admin/users', name: '用户管理' }, { path: '/admin/bookings', name: '预约管理' }, ]
-                // state.user.userMenuList = [{ path: '/booking', name: '首页' }, { path: '/record', name: '我的预约' }, { path: '/admin/dashboard', name: '首页' }, { path: '/admin/termical', name: '机器管理' }, { path: '/admin/users', name: '用户管理' }, { path: '/admin/bookings', name: '预约管理' }, ]
+            state.user.userMenuList = [{ path: '/admin/dashboard', name: '首页' }, { path: '/admin/termical', name: '机器管理' }, { path: '/admin/users', name: '用户管理' }, { path: '/admin/bookings', name: '预约管理' },]
+            // state.user.userMenuList = [{ path: '/booking', name: '首页' }, { path: '/record', name: '我的预约' }, { path: '/admin/dashboard', name: '首页' }, { path: '/admin/termical', name: '机器管理' }, { path: '/admin/users', name: '用户管理' }, { path: '/admin/bookings', name: '预约管理' }, ]
         } else {
             state.user.userMenuList = [{ path: '/booking', name: '首页' }, { path: '/record', name: '我的预约' }]
         }
@@ -55,8 +57,9 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('USER_lOGIN', data).then(response => {
+                console.log(response.data)
                 resolve(response.data)
-                commit('USER_lOGIN', response.data.data)
+                commit('USER_lOGIN', response.data)
             }).catch(error => {
                 reject(error)
             })
@@ -68,7 +71,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             requestMap('LOGOUT', data).then(response => {
                 resolve(response.data)
-                    // 清空菜单
+                // 清空菜单
                 storage.set("userMenuList", {});
                 // 清空用户的信息
                 storage.set("userInfo", {});
