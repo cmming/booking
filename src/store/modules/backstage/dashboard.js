@@ -14,10 +14,8 @@ import {
 const state = {
     dashboard: {
         list: {
-            "pageNum": 0,
-            "pageSize": 0,
-            "totalNumber": 0,
-            "data": []
+            "data": [],
+            "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0 ,"per_page":15} },
         },
         searchData: { "btime": "", "etime": "", "pageNum": 1, "pageSize": 15, "order_by": "", "order": "" },
         columns: [{
@@ -69,7 +67,7 @@ const getters = {
 const mutations = {
     GET_ONLINE_TERMICAL: (state, data) => {
         state.dashboard.list = data
-        console.log(state.dashboard.list)
+        console.log(state.dashboard)
     },
 }
 
@@ -79,8 +77,8 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('GET_ONLINE_TERMICAL', data).then(response => {
-                resolve(response.data)
-                commit('GET_ONLINE_TERMICAL', response.data.data)
+                resolve(response)
+                commit('GET_ONLINE_TERMICAL', response.data)
             }).catch(error => {
                 reject(error)
             })
@@ -91,7 +89,7 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('GET_USER_BY_CODE', data).then(response => {
-                resolve(response.data)
+                resolve(response)
             }).catch(error => {
                 reject(error)
             })
@@ -102,7 +100,7 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('SET_TERMICAL_OFF', data).then(response => {
-                resolve(response.data)
+                resolve(response)
             }).catch(error => {
                 reject(error)
             })

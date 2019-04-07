@@ -1,19 +1,19 @@
 export default {
     GET_USERS_LIST: {
-        url: "getUserList.do",
-        method: "post",
+        url: "/user/list",
+        method: "get",
         hasData: true,
         isAdmin: true
     },
     USERS_STORE: {
-        url: "userRegister.do",
+        url: "user/save",
         method: "post",
         hasData: true,
         isAdmin: true
     },
     USERS_UPDATE: {
-        url: "updateUserInfoByAdmin.do",
-        method: "post",
+        url: "user/update",
+        method: "put",
         hasData: true,
         isAdmin: true
     },
@@ -23,11 +23,11 @@ export default {
         hasData: true,
         isAdmin: true
     },
-    USERS_SET_PWD: {
-        url: "setUserPassWord.do",
-        method: "post",
-        hasData: true,
-        isAdmin: true
-    },
+    // USERS_SET_PWD: {
+    //     url: "/user/password",
+    //     method: "put",
+    //     hasData: true,
+    //     isAdmin: true
+    // },
     
 }

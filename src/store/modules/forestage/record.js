@@ -1,7 +1,8 @@
 import storage from '@/utils/storage';
 import {
     GET_RECORD_LIST,
-    UPDATE_RECORD
+    UPDATE_RECORD,
+    DELETE_RECORD
 } from '../mutation-types'
 
 
@@ -12,7 +13,7 @@ import {
 
 const state = {
     record: {
-        llist: {
+        list: {
             "data": [],
             "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0 ,"per_page":15} },
         },
@@ -43,10 +44,10 @@ const state = {
         //数据item key
         deleteKey: "id",
         //删除过程中的请求参数的key
-        deleteParamsKey: "id",
+        deleteParamsKey: "resource_id",
         // addAction: ADMIN_FILE_LOG_ADD,
         // updateAction: UPDATE_RECORD,
-        deleteAction: UPDATE_RECORD,
+        deleteAction: DELETE_RECORD,
         // formModel: {
         //     AppName: ""
         // },
@@ -68,9 +69,7 @@ const getters = {
 
 const mutations = {
     GET_RECORD_LIST: (state, data) => {
-        console.log(data)
         state.record.list = data
-        console.log(state.record.list)
     },
 }
 
@@ -87,11 +86,11 @@ const actions = {
             })
         })
     },
-    UPDATE_RECORD({
+    DELETE_RECORD({
         commit
     }, data) {
         return new Promise((resolve, reject) => {
-            requestMap('UPDATE_RECORD', data).then(response => {
+            requestMap('DELETE_RECORD', data).then(response => {
                 resolve(response.data)
             }).catch(error => {
                 reject(error)

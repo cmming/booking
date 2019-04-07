@@ -13,13 +13,13 @@
         class=""
         tag="li"
         to="/record"
-      >我的预约</router-link> -->
+      >我的预约</router-link>-->
       <!-- 将菜单以参数的形式传入 -->
       <router-link
         v-for="(item,key) in user.userMenuList"
         :key="key"
         active-class="active"
-        class=""
+        class
         tag="li"
         :to="item.path"
       >{{item.name}}</router-link>
@@ -36,28 +36,15 @@
           >我的预约</router-link>
           <li>修改密码</li>
         </ul>
-      </li> -->
+      </li>-->
       <!-- 右侧的导航 -->
-      <li
-        class="fr"
-        @click="logout"
-      >
-        <svg-icon
-          class-name='login-icon'
-          icon-class="logout"
-        />
+      <li class="fr" @click="logout">
+        <svg-icon class-name="login-icon" icon-class="logout"/>
       </li>
 
-      <el-dropdown
-        tag="li"
-        class="fr userInfo"
-        trigger="click"
-      >
+      <el-dropdown tag="li" class="fr userInfo" trigger="click">
         <span class="el-dropdown-link">
-          <img
-            src="../../../../assets/images/avatar.png"
-            alt=""
-          >
+          <img src="../../../../assets/images/avatar.png" alt>
           {{user.userInfo.userName}}
           <!-- 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> -->
         </span>
@@ -68,11 +55,7 @@
     </ul>
 
     <!-- 修改密码的弹框 -->
-    <el-dialog
-      title="上机用户信息"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
+    <el-dialog title="上机用户信息" :visible.sync="dialogVisible" width="30%">
       <el-form
         :model="ruleForm2"
         status-icon
@@ -81,31 +64,17 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item
-          label="密码"
-          prop="pass"
-        >
-          <el-input
-            type="password"
-            v-model="ruleForm2.pass"
-            autocomplete="off"
-          ></el-input>
+        <el-form-item label="旧密码" prop="pass">
+          <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item
-          label="确认密码"
-          prop="checkPass"
-        >
-          <el-input
-            type="password"
-            v-model="ruleForm2.checkPass"
-            autocomplete="off"
-          ></el-input>
+        <el-form-item label="密码" prop="pass">
+          <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+          <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="submitForm('ruleForm2')"
-          >提交</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -154,10 +123,12 @@ export default {
     return {
       dialogVisible: false,
       ruleForm2: {
+        password: "",
         pass: "",
         checkPass: ""
       },
       rules2: {
+        password: [{ required: true, message: '请输入旧密码', trigger: 'blur' },],
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
       }
@@ -167,7 +138,9 @@ export default {
   methods: {
     changePwd() {
       this.dialogVisible = true;
-      // this.$store.dispatch("USERS_SET_PWD")
+      this.ruleForm2.pass = "";
+      this.ruleForm2.checkPass = "";
+      this.ruleForm2.password = "";
     },
     logout() {
       this.$store.dispatch("LOGOUT").then(res => {
@@ -181,12 +154,12 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$store
-            .dispatch("USERS_SET_PWD", {
-              passWord: this.ruleForm2.pass
+            .dispatch("USER_SET_PWD", {
+              password: this.ruleForm2.password,
+              newPassword: this.ruleForm2.pass
             })
             .then(res => {
-              if (res.state == 1) {
-                // 延迟3 秒即将自动 退出系统
+              if (res.status == 204) {
                 this.$notify({
                   title: "警告",
                   message: "密码修改成功，3秒后将自动退出系统",

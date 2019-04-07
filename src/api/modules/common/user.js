@@ -17,7 +17,7 @@ export default {
     },
 
     USER_INFO: {
-        url: "/auth/logout",
+        url: "/auth/me",
         method: "post",
         hasData: false,
     },
@@ -27,5 +27,10 @@ export default {
         method: "post",
         hasData: false,
     },
-    
+    USER_SET_PWD: {
+        url: "/user/password",
+        method: "put",
+        hasData: true,
+        isAdmin: true
+    },
 }

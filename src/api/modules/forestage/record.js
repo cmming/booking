@@ -5,9 +5,9 @@ export default {
         hasData: true,
         isAdmin: true
     },
-    UPDATE_RECORD: {
-        url: "api/booking/termicalOrders",
-        method: "put",
+    DELETE_RECORD: {
+        url: "/booking/termicalOrders",
+        method: "delete",
         hasData: true,
         isAdmin: true
     },

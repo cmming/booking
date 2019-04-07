@@ -13,31 +13,22 @@ import {
 const state = {
     bookings: {
         list: {
-            "pageNum": 0,
-            "pageSize": 0,
-            "totalNumber": 0,
-            "data": []
+            "data": [],
+            "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0 ,"per_page":15} },
         },
         searchData: { "btime": "", "etime": "", "pageNum": 1, "pageSize": 15, "order_by": "", "order": "", "userName": "", "idNumber": "", "phone": "" },
+        
         columns: [{
-            prop: "userName",
-        }, {
-            prop: "pcId",
-        }, {
-            prop: "pcName",
-        }, {
-            prop: "phone",
+            prop: "termical_id",
         },{
-            prop:"applyTimes",
+            prop: "name",
         },{
-            prop:"applyCode",
+            prop:"btime",
         },{
-            prop:"applyDateStr",
+            prop:"etime",
         }],
         filterColumns: [{
-            prop: "applyStatus",
-        },{
-            prop: "adminMark",
+            prop: "state",
         }],
         index: "bookings",
         listAction: GET_BOOKINGS_LIST,
@@ -94,6 +85,8 @@ const getters = {
 const mutations = {
     GET_BOOKINGS_LIST: (state, data) => {
         state.bookings.list = data
+
+        console.log(state.bookings)
     },
 }
 
@@ -103,8 +96,8 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('GET_BOOKINGS_LIST', data).then(response => {
-                resolve(response.data)
-                commit('GET_BOOKINGS_LIST', response.data.data)
+                resolve(response)
+                commit('GET_BOOKINGS_LIST', response.data)
             }).catch(error => {
                 reject(error)
             })

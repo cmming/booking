@@ -16,10 +16,8 @@ import {
 const state = {
     termical: {
         list: {
-            "pageNum": 0,
-            "pageSize": 0,
-            "totalNumber": 0,
-            "data": []
+            "data": [],
+            "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0 ,"per_page":15} },
         },
         searchOption: {
             state: { prop: "state", type: "radio", option: [{ label: "全部", value: '' },{ label: "故障", value: -1 }, { label: "正常", value: 1 }, { label: "删除", value: -2 }] },
@@ -28,7 +26,7 @@ const state = {
         columns: [{
             prop: "id",
         }, {
-            prop: "pcName",
+            prop: "name",
         }],
         filterColumns: [{
             prop: "state",
@@ -49,22 +47,24 @@ const state = {
         //数据item key
         deleteKey: "id",
         //删除过程中的请求参数的key
-        deleteParamsKey: "id",
+        deleteParamsKey: "resource_id",
+        updateKey: "id",
+        updateParamsKey: "resource_id",
         addAction: TERMICAL_ADD,
         updateAction: TERMICAL_UPDATE,
         deleteAction: TERMICAL_DELETE,
         formModel: {
-            pcName: "",
+            name: "",
             state: 1,
         },
         submitForms: [
             //应用名称
-            { prop: "pcName", type: "input" },
+            { prop: "name", type: "input" },
             // 1正常，-1故障，-2是停用删除
             { prop: "state", type: "radio", option: [{ label: "故障", value: -1 }, { label: "正常", value: 1 }, { label: "删除", value: -2 }] },
         ],
         submitFormsRoles: {
-            pcName: [{ roleKey: 'required', required: true, trigger: "change" }],
+            name: [{ roleKey: 'required', required: true, trigger: "change" }],
         }
     }
 }
@@ -87,8 +87,8 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('GET_TERMICAL_LIST', data).then(response => {
-                resolve(response.data)
-                commit('GET_TERMICAL_LIST', response.data.data)
+                resolve(response)
+                commit('GET_TERMICAL_LIST', response.data)
             }).catch(error => {
                 reject(error)
             })

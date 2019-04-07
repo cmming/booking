@@ -8,7 +8,6 @@ import {
 import store from '@/store'
 import storage from '@/utils/storage';
 
-// import { getRootApi } from "@/utils/function";
 
 
 // create an axios instance
@@ -18,12 +17,11 @@ const service = axios.create({
 
 
 service.interceptors.request.use(config => {
-    // store.dispatch('SHOW_LOADING')
+    store.dispatch('SHOW_LOADING')
     //修复 基本路径修改不生效的bug
     // config.baseURL = '/api/';
     config.baseURL = GLOBAL_CONFIG.INIT_API_UPL();
     //每次 都将请求的 头部 进行取值 取保最新
-    // config.data = qs.stringify(config.data);
     if (!config.headers['Content-Type'] || config.headers['Content-Type'] && config.headers['Content-Type'] !== 'multipart/form-data') {
 
         if (
@@ -38,9 +36,16 @@ service.interceptors.request.use(config => {
         config.headers['Content-Type'] = 'multipart/form-data'
     }
 
+    //添加token
+    //storage
+    if (storage.get('token')) {
+        // // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+        config.headers['Authorization'] = storage.get('token')['token_type'] + ' ' + storage.get('token')['access_token'];
+    }
+
     return config
 }, error => {
-    // store.dispatch('HIDE_LOADING')
+    store.dispatch('HIDE_LOADING')
     // Do something with request error
     // console.log(error) // for debug
     Promise.reject(error)
@@ -49,6 +54,7 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
     // response => response ,
     response => {
+        store.dispatch('HIDE_LOADING')
         var reStatus = response.status,
             notificationType = 'success',
             alertMsg = '';
@@ -60,6 +66,17 @@ service.interceptors.response.use(
                 //     alertMsg = response.data.message
                 //     notificationType = 'error'
                 // }
+                break;
+            case 201:
+                alertMsg = '数据添加成功'
+                break;
+            case 204:
+                // delete 表示删除成功 put 或者 patch 表示 资源更新 成功
+                if (response.config.method == 'delete') {
+                    alertMsg = '数据删除成功'
+                } else if (response.config.method == 'put' || 'patch') {
+                    alertMsg = '数据更新成功'
+                }
                 break;
             default:
                 break;
@@ -75,8 +92,8 @@ service.interceptors.response.use(
         return response
     },
     error => {
-        console.log(error.response.status, error.response.data)
-            // store.dispatch('HIDE_LOADING')
+        console.log(error.response.data.message == 'The token has been blacklisted')
+            store.dispatch('HIDE_LOADING')
         if (error && error.response && error.response.status) {
             var errorStatus = error.response.status,
                 errorAlertMsg = '',
@@ -90,8 +107,31 @@ service.interceptors.response.use(
                     // uamConfigData.token = "";
                     // storage.set('uamConfigData', uamConfigData);
                     // 退出登陆
-                    store.dispatch('LOGOUT')
-                    router.push('/login')
+                    // store.dispatch('LOGOUT')
+                    // 取主动刷新token
+                    // console.log(error.response.data)
+                    if (error.response.data.error == 'token_expired' || error.response.data.message == 'Token has expired' || error.response.data.message == 'Unauthorized') {
+                        store.dispatch('REFRESH_TOKEN')
+                            .then(() => {
+                                // 如果刚好是获取角色的时候 token 过期 就刷新 整个应用
+                                if (store.getters.roles.length === 0) {
+                                    router.go(0)
+                                } else {
+                                    router.push('/refresh')
+                                }
+
+                            })
+                    } else if (error.response.data.error == 'token_invalid') {
+                        errorAlertTitle = '重新登录提示' + errorStatus;
+                        errorAlertMsg = '长时间为操作，自动退出'
+                        storage.set('token', {});
+                        router.push('/login')
+                    }else if(error.response.data.message == 'The token has been blacklisted'){
+                        errorAlertTitle = '重新登录提示' + errorStatus;
+                        errorAlertMsg = '长时间为操作，自动退出'
+                        storage.set('token', {});
+                        router.push('/login')
+                    }
                     break;
                 case 422:
                     errorAlertTitle = '参数错误';
@@ -114,10 +154,10 @@ service.interceptors.response.use(
 
                 case 504:
                     errorAlertMsg = '网关超时'
-                        // 清空 uamAdminConfigData
+                    // 清空 uamAdminConfigData
                     store.dispatch('ADMIN_LOGOUT')
-                        // 添加一个异常的页面
-                        // window.location.href ='#/admin/login'
+                    // 添加一个异常的页面
+                    // window.location.href ='#/admin/login'
                     break
 
                 case 505:
@@ -148,7 +188,7 @@ service.interceptors.response.use(
                 duration: 3000,
             });
             window.location.href = '#/login'
-                // console.log('根据你设置的timeout/真的请求超时 判断请求现在超时了，你可以在这里加入超时的处理方案')
+            // console.log('根据你设置的timeout/真的请求超时 判断请求现在超时了，你可以在这里加入超时的处理方案')
             return Promise.reject(error)
         }
         return error;

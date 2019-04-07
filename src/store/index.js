@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import user from "./modules/common/user";
+import loading from "./modules/common/loading";
 
 
 import booking from "./modules/forestage/booking";
@@ -21,6 +22,6 @@ import dashboard from "./modules/backstage/dashboard";
 
 
 const store = new Vuex.Store({
-    modules: { user, booking, record, users, bookings, termical,dashboard }
+    modules: { user, loading, booking, record, users, bookings, termical, dashboard }
 })
 export default store

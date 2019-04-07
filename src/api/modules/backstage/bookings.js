@@ -1,7 +1,7 @@
 export default {
     GET_BOOKINGS_LIST: {
-        url: "getAllApplyLogAndUserInfo.do",
-        method: "post",
+        url: "booking/termicalOrders",
+        method: "get",
         hasData: true,
         isAdmin: true
     },

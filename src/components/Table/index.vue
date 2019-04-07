@@ -7,17 +7,15 @@
       style="width: 100%"
       highlight-current-row
       tooltip-effect="dark"
+      v-loading="loading"
     >
-  
-
       <template v-for="(item,index)  in dataModal.columns">
         <el-table-column
           :key="dataModal.index+index"
           :prop="item.prop"
           :label="$t('backstage.'+dataModal.index+'.columns.'+item.prop)"
           show-overflow-tooltip
-        >
-        </el-table-column>
+        ></el-table-column>
       </template>
 
       <el-table-column
@@ -27,9 +25,9 @@
         :label="$t('backstage.'+dataModal.index+'.columns.'+item.prop)"
       >
         <template slot-scope="scope">
-          <el-tag :type="scope.row[item.prop]|changeTableColumns(dataModal.index,item.prop,'tagType')">
-            {{scope.row[item.prop]|changeTableColumns(dataModal.index,item.prop,"lable")}}
-          </el-tag>
+          <el-tag
+            :type="scope.row[item.prop]|changeTableColumns(dataModal.index,item.prop,'tagType')"
+          >{{scope.row[item.prop]|changeTableColumns(dataModal.index,item.prop,"lable")}}</el-tag>
         </template>
       </el-table-column>
 
@@ -46,7 +44,7 @@
               width="51px"
               height="50px"
               :src="scope.row[item.prop]"
-              alt=""
+              alt
               :key="index"
               v-viewer
               style="cursor:pointer"
@@ -95,27 +93,13 @@
             {{$t('backstage.table.edit')}}
           </el-button>
 
-          <slot
-            name="handleColumns"
-            :dataScope="scope"
-          ></slot>
+          <slot name="handleColumns" :dataScope="scope"></slot>
         </template>
-
       </el-table-column>
-
     </el-table>
-    <el-row
-      class="m-top-sm"
-      :gutter="0"
-    >
+    <el-row class="m-top-sm" :gutter="0">
       <!-- pc 端 -->
-      <el-col
-        :offset="5"
-        :lg="14"
-        :xs="0"
-        class="over-flow-auto"
-        style="text-align: center;"
-      >
+      <el-col :offset="5" :lg="14" :xs="0" class="over-flow-auto" style="text-align: center;">
         <div class="pagination-container">
           <el-pagination
             @size-change="handleSizeChange"
@@ -125,27 +109,21 @@
             :page-size="dataModal.list.meta.pagination.per_page"
             layout="total, sizes, prev, pager, next, jumper"
             :total="dataModal.list.meta.pagination.count"
-          >
-          </el-pagination>
+          ></el-pagination>
         </div>
       </el-col>
       <!-- 移动端 -->
-      <el-col
-        :lg="0"
-        :xs="24"
-        class="over-flow-auto"
-      >
+      <el-col :lg="0" :xs="24" class="over-flow-auto">
         <div class="pagination-container">
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page.sync="dataModal.list.meta.pagination.current_page"
             :page-sizes="[10,15,30, 50]"
-             :page-size="dataModal.list.meta.pagination.per_page"
+            :page-size="dataModal.list.meta.pagination.per_page"
             layout="prev, pager, next"
             :total="dataModal.list.meta.pagination.count"
-          >
-          </el-pagination>
+          ></el-pagination>
         </div>
       </el-col>
     </el-row>
@@ -162,6 +140,7 @@ Vue.use(Viewer, {
   }
 });
 export default {
+  computed: mapGetters(["loading"]),
   props: {
     dataModal: {
       type: Object,
@@ -215,22 +194,7 @@ export default {
               data[this.dataModal.deleteKey];
           }
           this.$store.dispatch(this.dataModal.deleteAction, resq).then(res => {
-            if (res.state >= 0) {
-              this.$notify({
-                title: this.$t("backstage.common.delete.notify.success.title"),
-                message: this.$t(
-                  "backstage.common.delete.notify.success.message"
-                ),
-                type: "success"
-              });
-              //更新列表数据
-              this.list();
-            } else {
-              this.$notify.error({
-                title: this.$t("backstage.common.delete.notify.error.title"),
-                message: this.$t("backstage.common.delete.notify.error.message")
-              });
-            }
+            this.list();
           });
         })
         .catch(() => {
@@ -247,20 +211,25 @@ export default {
       setTimeout(() => {
         // this.dataModal.formModel = data;
         // 仅仅将数据模型中的数据输入
-        for(var i in data){
+        for (var i in data) {
           // this.dataModal.formModel[i] = data[i]
           // 去掉类型为数组的
-          console.log(Object.prototype.toString.call(data[i]))
-          if(Object.prototype.toString.call(data[i])!='[object Object]'){
-            this.dataModal.formModel[i] = data[i]
+          console.log(Object.prototype.toString.call(data[i]));
+          if (Object.prototype.toString.call(data[i]) != "[object Object]") {
+            this.dataModal.formModel[i] = data[i];
           }
         }
         for (var i in this.dataModal.submitForms) {
           if (this.dataModal.submitForms[i].type == "transfer") {
-            this.dataModal.formModel[this.dataModal.submitForms[i].prop] = this.dataModal.formModel[this.dataModal.submitForms[i].prop]?this.dataModal.formModel[this.dataModal.submitForms[i].prop].split(','):[];
+            this.dataModal.formModel[this.dataModal.submitForms[i].prop] = this
+              .dataModal.formModel[this.dataModal.submitForms[i].prop]
+              ? this.dataModal.formModel[
+                  this.dataModal.submitForms[i].prop
+                ].split(",")
+              : [];
           }
         }
-        this.$emit('tableEdit');
+        this.$emit("tableEdit");
       }, 10);
 
       // console.log(this.dataModal.formModel);

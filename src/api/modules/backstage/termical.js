@@ -1,7 +1,7 @@
 export default {
     GET_TERMICAL_LIST: {
-        url: "getAllPcTable.do",
-        method: "post",
+        url: "booking/termicals",
+        method: "get",
         hasData: true,
         isAdmin: true
     },
@@ -12,20 +12,20 @@ export default {
         isAdmin: true
     },
     TERMICAL_ADD: {
-        url: "addPC.do",
+        url: "booking/termicals",
         method: "post",
         hasData: true,
         isAdmin: true
     },
     TERMICAL_DELETE: {
-        url: "getAllApplyLogAndUserInfo.do",
-        method: "post",
+        url: "/booking/termicals",
+        method: "delete",
         hasData: true,
         isAdmin: true
     },
     TERMICAL_UPDATE: {
-        url: "faultTag.do",
-        method: "post",
+        url: "/booking/termicals",
+        method: "put",
         hasData: true,
         isAdmin: true
     }

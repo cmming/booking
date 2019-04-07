@@ -6,9 +6,9 @@ export default {
         isAdmin: true
     },
     GET_ONLINE_TERMICAL: {
-        url: "getUseInfo.do",
-        method: "post",
-        hasData: true,
+        url: "booking/termicalOrders/online",
+        method: "get",
+        hasData: false,
         isAdmin: true
     },
     // 提前下机

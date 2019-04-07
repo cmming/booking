@@ -5,10 +5,10 @@
     :ref="dataModal.index"
     label-width="100px"
   >
-  <!-- enctype="multipart/form-data"
+    <!-- enctype="multipart/form-data"
     v-loading="loading"
     element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading" -->
+    element-loading-spinner="el-icon-loading"-->
     <template v-for="(item,index)  in dataModal.submitForms">
       <!-- 三次封装 删除重复代码 -->
 
@@ -18,9 +18,7 @@
         :prop="item.prop"
         v-if="((dataModal.formState=='update'&&(!item.notEdit))||(dataModal.formState=='add'))"
       >
-
         <template v-if="item.type=='input'">
-
           <el-input
             v-if="item.inputType&&item.inputType=='number'"
             :id="item.id?item.id:item.prop+dataModal.index"
@@ -46,11 +44,7 @@
             @change="selectChange(dataModal.formModel[item.prop])"
           >
             <template v-for="(v,k)  in item.option">
-              <el-option
-                :key="k"
-                :label="v.label"
-                :value="v.value"
-              ></el-option>
+              <el-option :key="k" :label="v.label" :value="v.value"></el-option>
             </template>
           </el-select>
         </template>
@@ -79,28 +73,16 @@
 
         <template v-if="item.type=='checkbox'">
           <el-checkbox-group v-model="dataModal.formModel[item.prop]">
-
             <template v-for="(v,k)  in item.option">
-
-              <el-checkbox
-                :key="k"
-                :label="v.label"
-                :name="item.prop"
-              ></el-checkbox>
-
+              <el-checkbox :key="k" :label="v.label" :name="item.prop"></el-checkbox>
             </template>
           </el-checkbox-group>
         </template>
 
         <template v-if="item.type=='radio'">
           <el-radio-group v-model="dataModal.formModel[item.prop]">
-
             <template v-for="(v,k)  in item.option">
-
-              <el-radio
-                :key="k"
-                :label="v.value"
-              >{{v.label}}</el-radio>
+              <el-radio :key="k" :label="v.value">{{v.label}}</el-radio>
             </template>
           </el-radio-group>
         </template>
@@ -137,10 +119,8 @@
               class="el-upload__tip"
             >文件大小必须小于200MB</div>
           </el-upload>
-        </template> -->
-
+        </template>-->
       </el-form-item>
-
     </template>
 
     <el-form-item>
@@ -181,25 +161,30 @@ export default {
         );
       });
       // 如果是修改
-      this.$emit('formCreate');
+      this.$emit("formCreate");
     }
   },
 
   methods: {
-    selectChange(data){
-      this.$emit('selectChange', data);
+    selectChange(data) {
+      this.$emit("selectChange", data);
     },
     list() {
       // var resData = this.getDataFormat(this.projectReport.searchData);
       var paramObj = this.dataModal.searchData;
       this.$store.dispatch(this.dataModal.listAction, paramObj);
     },
-    delTransferData(){
+    delTransferData() {
       for (var i in this.dataModal.submitForms) {
-          if (this.dataModal.submitForms[i].type == "transfer") {
-            this.dataModal.formModel[this.dataModal.submitForms[i].prop] = this.dataModal.formModel[this.dataModal.submitForms[i].prop]?this.dataModal.formModel[this.dataModal.submitForms[i].prop].join(','):'';
-          }
+        if (this.dataModal.submitForms[i].type == "transfer") {
+          this.dataModal.formModel[this.dataModal.submitForms[i].prop] = this
+            .dataModal.formModel[this.dataModal.submitForms[i].prop]
+            ? this.dataModal.formModel[this.dataModal.submitForms[i].prop].join(
+                ","
+              )
+            : "";
         }
+      }
     },
     submitForm() {
       this.$refs[this.dataModal.index].validate(valid => {
@@ -266,31 +251,7 @@ export default {
               this.$store
                 .dispatch(this.dataModal.updateAction, this.dataModal.formModel)
                 .then(res => {
-                  if (res.state >= 0) {
-                    this.$notify({
-                      title: this.$t(
-                        "backstage.common.update.notify.success.title"
-                      ),
-                      message: this.$t(
-                        "backstage.common.update.notify.success.message"
-                      ),
-                      type: "success"
-                    });
-                    this.dataModal.formDialog = false;
-                    //更新列表数据
-                    this.list();
-                  } else {
-                    // this.$notify.error({
-                    //   title: this.$t(
-                    //     "backstage.common.update.notify.error.title"
-                    //   ),
-                    //   message: res.message
-                    //     ? res.message
-                    //     : this.$t(
-                    //         "backstage.common.update.notify.error.message"
-                    //       )
-                    // });
-                  }
+                  this.list();
                 });
             }
           } else {
@@ -299,72 +260,67 @@ export default {
               this.$store
                 .dispatch(this.dataModal.addAction, this.dataModal.formModel)
                 .then(res => {
-                  // console.log(res);
-                  if (res.state >= 0) {
-                    this.$notify({
-                      title: this.$t(
-                        "backstage.common.add.notify.success.title"
-                      ),
-                      message: this.$t(
-                        "backstage.common.add.notify.success.message"
-                      ),
-                      type: "success"
-                    });
-                    this.dataModal.formDialog = false;
-                    let restBtn = this.dataModal.index + "_reset";
-                    this.$refs[restBtn].$el.click();
-                    //更新列表数据
-                    this.list();
-                  } else {
-                    // this.$notify.error({
-                    //   title: this.$t("backstage.common.add.notify.error.title"),
-                    //   message: res.message
-                    //     ? res.message
-                    //     : this.$t("backstage.common.add.notify.error.message")
-                    // });
-                  }
+                  this.dataModal.formDialog = false;
+                  let restBtn = this.dataModal.index + "_reset";
+                  this.$refs[restBtn].$el.click();
+                  //更新列表数据
+                  this.list();
                   if (this.dataModal.formModelCopy) {
                     this.dataModal.formModel = this.dataModal.formModelCopy;
                   }
                 });
             } else if (this.dataModal.formState == "update") {
               // updateAction
+              this.dataModal.formModel[
+                this.dataModal.updateParamsKey
+              ] = this.dataModal.formModel[this.dataModal.updateKey];
               this.$store
                 .dispatch(this.dataModal.updateAction, this.dataModal.formModel)
                 .then(res => {
-                  if (res.state >= 0) {
-                    this.$notify({
-                      title: this.$t(
-                        "backstage.common.update.notify.success.title"
-                      ),
-                      message: this.$t(
-                        "backstage.common.update.notify.success.message"
-                      ),
-                      type: "success"
-                    });
-                    this.dataModal.formDialog = false;
-                    //更新列表数据
-                    this.list();
-                  } else {
-                    // this.$notify.error({
-                    //   title: this.$t(
-                    //     "backstage.common.update.notify.error.title"
-                    //   ),
-                    //   message: res.message
-                    //     ? res.message
-                    //     : this.$t(
-                    //         "backstage.common.update.notify.error.message"
-                    //       )
-                    // });
-                  }
+                  this.dataModal.formDialog = false;
+                  //更新列表数据
+                  this.list();
+                  //   if (res.state >= 0) {
+                  //     this.$notify({
+                  //       title: this.$t(
+                  //         "backstage.common.update.notify.success.title"
+                  //       ),
+                  //       message: this.$t(
+                  //         "backstage.common.update.notify.success.message"
+                  //       ),
+                  //       type: "success"
+                  //     });
+                  //     this.dataModal.formDialog = false;
+                  //     //更新列表数据
+                  //     this.list();
+                  //   } else {
+                  // this.$notify.error({
+                  //   title: this.$t(
+                  //     "backstage.common.update.notify.error.title"
+                  //   ),
+                  //   message: res.message
+                  //     ? res.message
+                  //     : this.$t(
+                  //         "backstage.common.update.notify.error.message"
+                  //       )
+                  // });
+                  // }
                 });
             }
           }
 
           for (var i in this.dataModal.submitForms) {
             if (this.dataModal.submitForms[i].type == "transfer") {
-              console.log(this.dataModal.formModel[this.dataModal.submitForms[i].prop])
-              this.dataModal.formModel[this.dataModal.submitForms[i].prop] = this.dataModal.formModel[this.dataModal.submitForms[i].prop]?this.dataModal.formModel[this.dataModal.submitForms[i].prop].join(','):'';
+              console.log(
+                this.dataModal.formModel[this.dataModal.submitForms[i].prop]
+              );
+              this.dataModal.formModel[
+                this.dataModal.submitForms[i].prop
+              ] = this.dataModal.formModel[this.dataModal.submitForms[i].prop]
+                ? this.dataModal.formModel[
+                    this.dataModal.submitForms[i].prop
+                  ].join(",")
+                : "";
             }
           }
 
@@ -373,7 +329,7 @@ export default {
           // }
           // console.log(this.dataModal.formModel)
         } else {
-          console.log("error submit!!",this.dataModal.formModel);
+          console.log("error submit!!", this.dataModal.formModel);
           return false;
         }
       });

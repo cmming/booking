@@ -15,26 +15,20 @@ import {
 const state = {
     users: {
         list: {
-            "pageNum": 0,
-            "pageSize": 0,
-            "totalNumber": 0,
-            "data": []
+            "data": [],
+            "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0 ,"per_page":15} },
         },
         searchData: { "btime": "", "etime": "", "pageNum": 1, "pageSize": 15, "order_by": "", "order": "","userName":"","idNumber":"","phone":"" },
         columns: [{
-            prop: "loginName",
+            prop: "name",
         },{
-            prop:"userName",
+            prop:"email",
         },{
-            prop:"idNumber",
-        },{
-            prop:"phone",
+            prop:"created_at",
         }],
-        filterColumns: [{
-            prop: "state",
-        },{
-            prop: "jurisdiction",
-        }],
+        // filterColumns: [{
+        //     prop: "state",
+        // }],
         index: "users",
         listAction: GET_USERS_LIST,
 
@@ -51,32 +45,27 @@ const state = {
         //数据item key
         deleteKey: "id",
         //删除过程中的请求参数的key
-        deleteParamsKey: "id",
+        deleteParamsKey: "resource_id",
+        updateKey: "id",
+        updateParamsKey: "resource_id",
         addAction: USERS_STORE,
         updateAction: USERS_UPDATE,
         deleteAction: USERS_UPDATE,
         formModel: {
-            idNumber: "",
-            userName: "",
-            phone: "",
-            jurisdiction: 2,
-            loginName: "",
+            name: "",
+            email: "",
+            password:""
         },
         submitForms: [
             //应用名称
-            { prop: "loginName", type: "input" },
-            { prop: "userName", type: "input" },
-            { prop: "idNumber", type: "input",},
-            { prop: "phone", type: "input"},
-            // { prop: "jurisdiction", type: "input"},
-            { prop: "jurisdiction", type: "radio", option: [{ label: "管理员", value: 1 }, { label: "用户", value: 2 }] },
+            { prop: "name", type: "input" },
+            { prop: "email", type: "input" },
+            { prop: "password", type: "input",inputType:"password",notEdit:true },
         ],
         submitFormsRoles: {
-            loginName: [{ roleKey: 'required', required: true, trigger: "change" }],
-            idNumber: [{ roleKey: 'required', required: true,  trigger: "change" }],
-            userName: [{ roleKey: 'required', required: true, trigger: "change" }],
-            phone: [{ roleKey: 'required', required: true,  trigger: "change" }],
-            jurisdiction: [{ roleKey: 'required', required: true, type: "number",  trigger: "change" }],
+            name: [{ roleKey: 'required', required: true, trigger: "change" }],
+            email: [{ roleKey: 'required', required: true,  trigger: "change" }],
+            password: [{ roleKey: 'required', required: true,  trigger: "change" }],
         }
     }
 }
@@ -99,8 +88,8 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('GET_USERS_LIST', data).then(response => {
-                resolve(response.data)
-                commit('GET_USERS_LIST', response.data.data)
+                resolve(response)
+                commit('GET_USERS_LIST', response.data)
             }).catch(error => {
                 reject(error)
             })

@@ -88,7 +88,7 @@ export const backstage = {
                 '4': '强制下线',
                 '5': '管理员拒绝订单',
             },
-            
+
         },
         columns: {
             pcName: "机器名称",
@@ -98,10 +98,10 @@ export const backstage = {
             applyStatus: "申请状态",
             adminMark: "审批状态",
             applyDateStr: "申请时间",
-            termical_id:"机器编号",
-            btime:"开始时间",
-            etime:"结束时间",
-            state:"订单状态"
+            termical_id: "机器编号",
+            btime: "开始时间",
+            etime: "结束时间",
+            state: "订单状态"
         },
         submitForms: {
             remarks: {
@@ -144,54 +144,32 @@ export const backstage = {
                 '1': '正常',
                 '-1': '停用',
             },
-            // 权限，1管理员，2用户
-            jurisdiction: {
-                '1': '管理员',
-                '2': '用户',
-            },
         },
         columns: {
-            loginName: "登录名",
-            userName: "用户姓名",
-            idNumber: "证件号",
-            phone: "手机号",
-            state: "状态",
-            jurisdiction: "用户类型",
+            name: "登录名",
+            email: "用户姓名",
+            created_at: "创建时间",
         },
         submitForms: {
-            idNumber: {
-                label: "证件号",
-                placeholder: "请输入证件号",
+            name: {
+                label: "名称",
+                placeholder: "请输入名称",
                 message: {
-                    required: "请输入证件号",
+                    required: "请输入名称",
                 }
             },
-            userName: {
-                label: "用户姓名",
-                placeholder: "请输入用户姓名",
+            email: {
+                label: "用户邮箱",
+                placeholder: "请输入邮箱",
                 message: {
-                    required: "请输入用户姓名",
+                    required: "请输入邮箱",
                 }
             },
-            loginName: {
-                label: "登录名",
-                placeholder: "请输入登录名",
+            password: {
+                label: "用户密码",
+                placeholder: "请输入用户密码",
                 message: {
-                    required: "请输入登录名",
-                }
-            },
-            phone: {
-                label: "手机号",
-                placeholder: "请输入手机号",
-                message: {
-                    required: "请输入手机号",
-                }
-            },
-            jurisdiction: {
-                label: "用户类型",
-                placeholder: "请选择用户类型",
-                message: {
-                    required: "请选择用户类型",
+                    required: "请输入用户密码",
                 }
             },
         }
@@ -199,33 +177,60 @@ export const backstage = {
     },
     bookings: {
         filter: {
-            // -1预约，-2取消，-3以使用
-            applyStatus: {
-                '-1': '预约',
-                '-2': '取消',
-                '-3': '已使用',
+            // 订单状态 1：未使用 2：使用中 3：已经使用 4：强制下线 5：管理员拒绝订单
+            state: {
+                '1': '未使用',
+                '2': '使用中',
+                '3': '已经使用',
+                '4': '强制下线',
+                '5': '管理员拒绝订单',
             },
-            // 干预标记，0正常，1到时不上机，2提前下机,3拒绝申请,4故障
-            adminMark: {
-                '0': '正常',
-                '1': '到时不上机',
-                '2': '提前下机',
-                '3': '拒绝申请',
-                '4': '故障',
-            },
+
         },
         columns: {
-            userName: "用户名称",
-            pcId: "机器编号",
             pcName: "机器名称",
-            phone: "手机",
             applyTimes: "申请时间",
             applyCode: "申请码",
             applyTimes: "申请时间",
             applyStatus: "申请状态",
             adminMark: "审批状态",
-            applyDateStr: "申请时间"
+            applyDateStr: "申请时间",
+            termical_id: "机器编号",
+            name:"机器名称",
+            btime: "开始时间",
+            etime: "结束时间",
+            state: "订单状态"
         },
+        submitForms: {
+            remarks: {
+                label: "备注",
+                placeholder: "请输入备注",
+                message: {
+                    required: "请输入备注",
+                }
+            },
+            webName: {
+                label: "网站名称",
+                placeholder: "请输入网站名称",
+                message: {
+                    required: "请输入网站名称",
+                }
+            },
+            website: {
+                label: "网址",
+                placeholder: "请输入网址",
+                message: {
+                    required: "请输入网址",
+                }
+            },
+            logoFile: {
+                label: "logo",
+                placeholder: "请填写logo",
+                message: {
+                    required: "请输入logo",
+                }
+            },
+        }
 
     },
 
@@ -242,11 +247,11 @@ export const backstage = {
         },
         columns: {
             id: "机器编号",
-            pcName: "机器名称",
+            name: "机器名称",
             state: "机器状态"
         },
         submitForms: {
-            pcName: {
+            name: {
                 label: "机器名称",
                 placeholder: "请输入机器名称",
                 message: {
