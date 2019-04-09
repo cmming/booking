@@ -39,7 +39,7 @@
       </li>-->
       <!-- 右侧的导航 -->
       <li class="fr" @click="logout">
-        <svg-icon class-name="login-icon" icon-class="logout"/>
+        <svg-icon icon-class="logout"/>
       </li>
 
       <el-dropdown tag="li" class="fr userInfo" trigger="click">
@@ -131,7 +131,7 @@ export default {
         password: [{ required: true, message: '请输入旧密码', trigger: 'blur' },],
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
-      }
+      },
     };
   },
   computed: mapGetters(["user"]),

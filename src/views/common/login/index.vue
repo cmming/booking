@@ -15,6 +15,7 @@
             v-model="user.form.name"
             placeholder="用户名"
             autocomplete=false
+            @click.native="login"
           ></el-input>
 
           <svg-icon
@@ -31,6 +32,7 @@
             placeholder="密码"
             autocomplete=false
             type="password"
+            @click.native="login"
           ></el-input>
 
           <svg-icon

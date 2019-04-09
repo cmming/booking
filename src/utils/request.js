@@ -131,6 +131,7 @@ service.interceptors.response.use(
                         errorAlertMsg = '长时间为操作，自动退出'
                         storage.set('token', {});
                         router.push('/login')
+                        window.location.reload()
                     }
                     break;
                 case 422:
