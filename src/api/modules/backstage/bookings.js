@@ -11,5 +11,11 @@ export default {
         hasData: true,
         isAdmin: true
     },
+    BOOKING_TERMICAL_ORDER_UPDATE: {
+        url: "booking/termicalOrders",
+        method: "put",
+        hasData: true,
+        isAdmin: true
+    },
 
 }

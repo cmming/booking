@@ -21,6 +21,8 @@ const state = {
         columns: [{
             prop: "termical_id",
         },{
+            prop: "termical_name",
+        },{
             prop:"btime",
         },{
             prop:"etime",
