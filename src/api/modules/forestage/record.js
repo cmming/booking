@@ -1,6 +1,6 @@
 export default {
     GET_RECORD_LIST: {
-        url: "/booking/termicalOrders",
+        url: "user/bookingTermicalOrders",
         method: "get",
         hasData: true,
         isAdmin: true

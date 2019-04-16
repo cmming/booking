@@ -53,6 +53,7 @@ export const USERS_DELETE = 'USERS_DELETE'
 /////////////////////////////////////////////////////////////////////////////////////////
 export const GET_BOOKINGS_LIST = 'GET_BOOKINGS_LIST'
 export const CHANGE_BOOKINGS_STATE = 'CHANGE_BOOKINGS_STATE'
+export const BOOKING_TERMICAL_ORDER_UPDATE = 'BOOKING_TERMICAL_ORDER_UPDATE'
 /////////////////////////////////////////////////////////////////////////////////////////
 
 

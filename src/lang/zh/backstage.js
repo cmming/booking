@@ -101,7 +101,8 @@ export const backstage = {
             termical_id: "机器编号",
             btime: "开始时间",
             etime: "结束时间",
-            state: "订单状态"
+            state: "订单状态",
+            termical_name:"机器名称"
         },
         submitForms: {
             remarks: {
@@ -176,6 +177,8 @@ export const backstage = {
 
     },
     bookings: {
+        add: { 'title': "添加订单" },
+        update: { 'title': "编辑订单" },
         filter: {
             // 订单状态 1：未使用 2：使用中 3：已经使用 4：强制下线 5：管理员拒绝订单
             state: {
@@ -199,35 +202,44 @@ export const backstage = {
             name:"机器名称",
             btime: "开始时间",
             etime: "结束时间",
-            state: "订单状态"
+            state: "订单状态",
+            termical_name:"机器名称",
+            user_name:"用户名称",
         },
         submitForms: {
-            remarks: {
-                label: "备注",
-                placeholder: "请输入备注",
+            termical_id: {
+                label: "机器编号",
+                placeholder: "请填写机器编号",
                 message: {
-                    required: "请输入备注",
+                    required: "请输入机器编号",
                 }
             },
-            webName: {
-                label: "网站名称",
-                placeholder: "请输入网站名称",
+            state: {
+                label: "订单状态",
+                placeholder: "",
                 message: {
-                    required: "请输入网站名称",
+                    required: "",
                 }
             },
-            website: {
-                label: "网址",
-                placeholder: "请输入网址",
+            date: {
+                label: "日期",
+                placeholder: "",
                 message: {
-                    required: "请输入网址",
+                    required: "",
                 }
             },
-            logoFile: {
-                label: "logo",
-                placeholder: "请填写logo",
+            start_time: {
+                label: "开始时间",
+                placeholder: "",
                 message: {
-                    required: "请输入logo",
+                    required: "",
+                }
+            },
+            end_time: {
+                label: "结束时间",
+                placeholder: "",
+                message: {
+                    required: "",
                 }
             },
         }

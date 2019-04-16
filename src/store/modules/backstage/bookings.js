@@ -2,6 +2,7 @@ import storage from '@/utils/storage';
 import {
     GET_BOOKINGS_LIST,
     CHANGE_BOOKINGS_STATE,
+    BOOKING_TERMICAL_ORDER_UPDATE
 } from '../mutation-types'
 
 
@@ -14,18 +15,20 @@ const state = {
     bookings: {
         list: {
             "data": [],
-            "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0 ,"per_page":15} },
+            "meta": { "pagination": { "count": 0, "current_page": 1, "total_pages": 0, "per_page": 15 } },
         },
-        searchData: { "btime": "", "etime": "", "pageNum": 1, "pageSize": 15, "order_by": "", "order": "", "userName": "", "idNumber": "", "phone": "" },
-        
+        searchData: { "btime": "", "etime": "", "pageNum": 1, "pageSize": 15, "order_by": "", "order": "", "user_name": "", "idNumber": "", "phone": "" },
+
         columns: [{
             prop: "termical_id",
-        },{
-            prop: "name",
-        },{
-            prop:"btime",
-        },{
-            prop:"etime",
+        }, {
+            prop: "termical_name",
+        }, {
+            prop: "user_name",
+        }, {
+            prop: "btime",
+        }, {
+            prop: "etime",
         }],
         filterColumns: [{
             prop: "state",
@@ -38,7 +41,7 @@ const state = {
         formState: 'add',
         commonAction: {
             delete: false,
-            edit: false,
+            edit: true,
             add: false,
             detail: false,
             hide: false
@@ -47,31 +50,31 @@ const state = {
         deleteKey: "id",
         //删除过程中的请求参数的key
         deleteParamsKey: "id",
+        updateKey: "id",
+        updateParamsKey: "resource_id",
         // addAction: USERS_STORE,
-        // updateAction: USERS_UPDATE,
+        updateAction: BOOKING_TERMICAL_ORDER_UPDATE,
         // deleteAction: USERS_UPDATE,
         formModel: {
-            idNumber: "",
-            userName: "",
-            phone: "",
-            jurisdiction: 2,
-            loginName: "",
+            // termical_id:"",
+            state: "",
+            date: "",
+            start_time: "",
+            end_time: ""
+
         },
         submitForms: [
             //应用名称
-            { prop: "loginName", type: "input" },
-            { prop: "userName", type: "input" },
-            { prop: "idNumber", type: "input", },
-            { prop: "phone", type: "input" },
-            // { prop: "jurisdiction", type: "input"},
-            { prop: "jurisdiction", type: "radio", option: [{ label: "管理员", value: 1 }, { label: "用户", value: 2 }] },
+            // { prop: "termical_id", type: "input" },
+            { prop: "date", type: "date" },
+            { prop: "start_time", type: "time", format: "HH:mm:ss" },
+            { prop: "end_time", type: "time", format: "HH:mm:ss" },
+            //  1：未使用 2：使用中 3：已经使用 4禁用
+            { prop: "state", type: "radio", option: [{ label: "未使用", value: 1 }, { label: "使用中", value: 2 }, { label: "已经使用", value: 3 }, { label: "禁用", value: 4 }] },
         ],
         submitFormsRoles: {
-            loginName: [{ roleKey: 'required', required: true, trigger: "change" }],
-            idNumber: [{ roleKey: 'required', required: true, trigger: "change" }],
-            userName: [{ roleKey: 'required', required: true, trigger: "change" }],
-            phone: [{ roleKey: 'required', required: true, trigger: "change" }],
-            jurisdiction: [{ roleKey: 'required', required: true, type: "number", trigger: "change" }],
+            // termical_id: [{ roleKey: 'required', required: true, trigger: "change" }],
+            state: [{ roleKey: 'required', required: true, type: "number", trigger: "change" }],
         }
     }
 }
@@ -108,6 +111,18 @@ const actions = {
     }, data) {
         return new Promise((resolve, reject) => {
             requestMap('CHANGE_BOOKINGS_STATE', data).then(response => {
+                resolve(response.data)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+
+    BOOKING_TERMICAL_ORDER_UPDATE({
+        commit
+    }, data) {
+        return new Promise((resolve, reject) => {
+            requestMap('BOOKING_TERMICAL_ORDER_UPDATE', data).then(response => {
                 resolve(response.data)
             }).catch(error => {
                 reject(error)

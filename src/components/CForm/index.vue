@@ -64,6 +64,7 @@
             :placeholder="$t('backstage.'+dataModal.index+'.submitForms.'+item.prop+'.placeholder')"
             v-model="dataModal.formModel[item.prop]"
             style="width: 220px;"
+            :value-format="item.format?item.format:''"
           ></el-time-picker>
         </template>
 

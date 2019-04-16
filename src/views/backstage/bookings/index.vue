@@ -13,19 +13,8 @@
           :xs="24"
         >
           <el-input
-            v-model="bookings.searchData.idNumber"
-            placeholder="用户证件号"
-          ></el-input>
-
-        </el-col>
-
-        <el-col
-          :lg="4"
-          :xs="24"
-        >
-          <el-input
-            v-model="bookings.searchData.phone"
-            placeholder="手机号"
+            v-model="bookings.searchData.user_name"
+            placeholder="用户名称"
           ></el-input>
 
         </el-col>
