@@ -43,13 +43,13 @@
           slot="handleColumns"
           slot-scope="scope"
         >
-          <el-button
+          <!-- <el-button
             size="small"
             type="danger"
             @click="refused(scope.dataScope.row)"
           >
             拒绝
-          </el-button>
+          </el-button> -->
 
         </template>
 

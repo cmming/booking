@@ -145,6 +145,7 @@ export default {
     logout() {
       this.$store.dispatch("LOGOUT").then(res => {
         this.$router.push("/login");
+        this.$router.push('/refresh')
       });
     },
     resetForm(formName) {

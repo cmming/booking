@@ -118,6 +118,7 @@ service.interceptors.response.use(
                                     router.go(0)
                                 } else {
                                     router.push('/refresh')
+                                    window.location.reload()
                                 }
 
                             })
